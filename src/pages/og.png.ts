@@ -7,8 +7,9 @@ import config from "@/config";
 
 export const GET: APIRoute = async context => {
   const fonts = fontData["--font-google-sans-code"];
-  const regularFontPath = getFontPathByWeight(fonts, 400);
-  const boldFontPath = getFontPathByWeight(fonts, 700);
+  // satori requires truetype (TTF) — not WOFF2
+  const regularFontPath = getFontPathByWeight(fonts, 400, { format: "truetype" });
+  const boldFontPath = getFontPathByWeight(fonts, 700, { format: "truetype" });
 
   if (regularFontPath === undefined || boldFontPath === undefined) {
     throw new Error("Cannot find the font path.");
@@ -28,44 +29,26 @@ export const GET: APIRoute = async context => {
       type: "div",
       props: {
         style: {
-          background: "#fefbfb",
+          background: "#09080F",
           width: "100%",
           height: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontFamily: "Google Sans Code",
+          fontFamily: "Inter",
         },
         children: [
           {
+            /* Glassy card */
             type: "div",
             props: {
               style: {
-                position: "absolute",
-                top: "-1px",
-                right: "-1px",
-                border: "4px solid #000",
-                background: "#ecebeb",
-                opacity: "0.9",
-                borderRadius: "4px",
+                border: "1px solid rgba(176,141,86,0.4)",
+                background: "rgba(26,18,40,0.85)",
+                borderRadius: "16px",
                 display: "flex",
                 justifyContent: "center",
                 margin: "2.5rem",
-                width: "88%",
-                height: "80%",
-              },
-            },
-          },
-          {
-            type: "div",
-            props: {
-              style: {
-                border: "4px solid #000",
-                background: "#fefbfb",
-                borderRadius: "4px",
-                display: "flex",
-                justifyContent: "center",
-                margin: "2rem",
                 width: "88%",
                 height: "80%",
               },
@@ -76,7 +59,7 @@ export const GET: APIRoute = async context => {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
-                    margin: "20px",
+                    margin: "28px",
                     width: "90%",
                     height: "90%",
                   },
@@ -98,14 +81,18 @@ export const GET: APIRoute = async context => {
                           {
                             type: "p",
                             props: {
-                              style: { fontSize: 72, fontWeight: "bold" },
+                              style: {
+                                fontSize: 72,
+                                fontWeight: "bold",
+                                color: "#B08D56",
+                              },
                               children: config.site.title,
                             },
                           },
                           {
                             type: "p",
                             props: {
-                              style: { fontSize: 28 },
+                              style: { fontSize: 24, color: "#E8E0D0" },
                               children: config.site.description,
                             },
                           },
@@ -125,7 +112,7 @@ export const GET: APIRoute = async context => {
                         children: {
                           type: "span",
                           props: {
-                            style: { overflow: "hidden", fontWeight: "bold" },
+                            style: { overflow: "hidden", fontWeight: "bold", color: "#B08D56" },
                             children: new URL(config.site.url).hostname,
                           },
                         },
@@ -145,13 +132,13 @@ export const GET: APIRoute = async context => {
       embedFont: true,
       fonts: [
         {
-          name: "Google Sans Code",
+          name: "Inter",
           data: regularData,
           weight: 400,
           style: "normal",
         },
         {
-          name: "Google Sans Code",
+          name: "Inter",
           data: boldData,
           weight: 700,
           style: "normal",

@@ -1,9 +1,15 @@
 @plugin "@tailwindcss/typography";
 
 @layer base {
-  /* ===== Override default Tailwind Typography styles ===== */
+  /* ════════════════════════════════════════
+     Premium prose — optimised for readability
+     at all viewport sizes.
+  ════════════════════════════════════════ */
   .app-prose {
     @apply prose;
+    /* Wider line-height and slightly larger body for long-form reading */
+    font-size: 1.0625rem;   /* 17px */
+    line-height: 1.78;
 
     h1,
     h2,

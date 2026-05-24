@@ -4,32 +4,203 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+/* ══════════════════════════════════════════
+   KEYFRAMES
+══════════════════════════════════════════ */
+@keyframes shimmer-text {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes pulse-blob {
+  0%, 100% { transform: scale(1);    opacity: 0.14; }
+  50%       { transform: scale(1.06); opacity: 0.22; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px)  rotate(0deg); }
+  33%       { transform: translateY(-10px) rotate(1.5deg); }
+  66%       { transform: translateY(-5px)  rotate(-1deg); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1);    opacity: 0.6; }
+  50%       { transform: scale(1.3);  opacity: 1; }
+}
+
+/* ══════════════════════════════════════════
+   BASE
+══════════════════════════════════════════ */
 @layer base {
   * {
     @apply border-border outline-accent/75;
-    scrollbar-width: auto;
-    scrollbar-color: var(--color-muted) transparent;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(76, 29, 149, 0.25) transparent;
   }
-  a,
-  button {
+
+  html {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv01", "cv03", "cv04", "ss01";
+  }
+
+  a, button {
     @apply outline-accent outline-offset-1 focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
   }
+
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+
+  ::selection {
+    background: rgba(124, 58, 237, 0.22);
+    color: inherit;
+  }
+
+  /* ── Dark-mode body ambient glow ── */
+  [data-theme="dark"] body {
+    background-image:
+      radial-gradient(ellipse 120% 50% at 50% -5%, rgba(124, 58, 237, 0.22) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 30% at 100% 100%, rgba(232, 192, 122, 0.06) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
 }
 
+/* ══════════════════════════════════════════
+   LAYOUT UTILITIES
+══════════════════════════════════════════ */
+/* Reading column — used for long-form post content */
 @utility max-w-app {
   @apply max-w-3xl;
 }
 
+/* Reading layout — narrow, centred */
 @utility app-layout {
-  @apply max-w-app mx-auto w-full px-4;
+  @apply max-w-app mx-auto w-full px-4 sm:px-6;
+}
+
+/* Wide layout — used for the home, archive, header, footer */
+@utility app-wide {
+  @apply mx-auto w-full px-4 sm:px-6 lg:px-10;
+  max-width: 80rem; /* 1280px */
 }
 
 @utility active-nav {
-  @apply underline decoration-wavy decoration-2 underline-offset-8;
+  color: var(--accent);
+  @apply font-semibold;
+}
+
+/* ══════════════════════════════════════════
+   BRAND UTILITIES
+══════════════════════════════════════════ */
+
+/* Animated shimmer gradient text */
+@utility gradient-text {
+  background: var(--gradient-text);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer-text 5s ease infinite;
+}
+
+/* Hero-sized shimmer */
+@utility hero-gradient-text {
+  background: var(--gradient-text);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer-text 6s ease infinite;
+}
+
+/* Brand dot — replaces final period in titles for a signature flourish */
+@utility brand-dot {
+  display: inline-block;
+  width: 0.28em;
+  height: 0.28em;
+  border-radius: 50%;
+  background: var(--gradient-gold);
+  margin-inline-start: 0.04em;
+  vertical-align: 0.06em;
+  box-shadow: 0 0 14px rgba(176, 141, 86, 0.55);
+}
+
+/* Premium card surface */
+@utility card-surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition:
+    transform  0.25s var(--ease-smooth),
+    box-shadow 0.25s var(--ease-smooth),
+    border-color 0.25s var(--ease-smooth);
+}
+
+/* Glow ring */
+@utility glow-accent {
+  box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.35), 0 0 24px var(--glow-accent);
+}
+
+/* ══════════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity   0.55s var(--ease-out),
+    transform 0.55s var(--ease-out);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children inside a reveal-stagger parent */
+.reveal-stagger > *:nth-child(1) { transition-delay:   0ms; }
+.reveal-stagger > *:nth-child(2) { transition-delay:  70ms; }
+.reveal-stagger > *:nth-child(3) { transition-delay: 140ms; }
+.reveal-stagger > *:nth-child(4) { transition-delay: 210ms; }
+.reveal-stagger > *:nth-child(5) { transition-delay: 280ms; }
+.reveal-stagger > *:nth-child(6) { transition-delay: 350ms; }
+
+/* ══════════════════════════════════════════
+   NAV SCROLL STATE
+══════════════════════════════════════════ */
+#site-header .nav-border {
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-smooth);
+}
+
+#site-header.scrolled .nav-border {
+  opacity: 1;
+}
+
+/* ══════════════════════════════════════════
+   READING PROGRESS BAR
+══════════════════════════════════════════ */
+@keyframes progress-glow {
+  0%, 100% { box-shadow: 0 0 6px var(--color-brand-purple); }
+  50%       { box-shadow: 0 0 12px var(--color-brand-gold); }
+}
+
+.progress-bar {
+  animation: progress-glow 2s ease infinite;
 }
 
 :target {

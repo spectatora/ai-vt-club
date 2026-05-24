@@ -1,6 +1,5 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import IconHash from "@/assets/icons/IconHash.svg";
 import config from "@/config";
 
 type Props = {
@@ -10,30 +9,45 @@ type Props = {
 };
 
 const { tag, tagName, size = "lg" } = Astro.props;
-
 const locale = Astro.currentLocale ?? config.site.lang;
 ---
 
-<li>
+<li class="inline-flex">
   <a
     href={getRelativeLocaleUrl(locale, `tags/${tag}/`)}
     transition:name={tag}
     class:list={[
-      "flex items-center gap-0.5",
-      "border-foreground border-b-2 border-dashed",
-      "hover:border-accent hover:text-accent hover:-mt-0.5",
-      "focus-visible:text-accent focus-visible:border-none",
-      { "text-sm": size === "sm" },
-      { "text-lg": size === "lg" },
+      "pill-tag",
+      { "text-xs py-0.5 px-3": size === "sm" },
+      { "text-sm py-1 px-4":   size === "lg" },
     ]}
   >
-    <IconHash
-      class:list={[
-        "opacity-80",
-        { "size-5": size === "lg" },
-        { "size-4": size === "sm" },
-      ]}
-    />
-    {tagName}
+    <span class="opacity-50">#</span>{tagName}
   </a>
 </li>
+
+<style>
+  .pill-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    border-radius: 999px;
+    background: var(--muted);
+    color: var(--muted-foreground);
+    border: 1px solid var(--border);
+    transition:
+      color       0.2s var(--ease-smooth),
+      background  0.2s var(--ease-smooth),
+      border-color 0.2s var(--ease-smooth),
+      transform   0.2s var(--ease-spring);
+  }
+
+  .pill-tag:hover {
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+    transform: translateY(-1px);
+  }
+</style>

@@ -1,37 +1,38 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import IconUnderline from "@/assets/icons/IconUnderline.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
-import IconArchive from "@/assets/icons/IconArchive.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconSearch from "@/assets/icons/IconSearch.svg";
 import IconMoon from "@/assets/icons/IconMoon.svg";
 import IconX from "@/assets/icons/IconX.svg";
 import LinkButton from "./LinkButton.astro";
 import { stripBase, stripLocale } from "@/utils/withBase";
-import { useTranslations } from "@/i18n";
 import config from "@/config";
 
 const { site, features } = config;
-
 const locale = Astro.currentLocale ?? config.site.lang;
-const t = useTranslations(locale);
 
-// Strip the base prefix so isActive comparisons work regardless of deploy subdirectory.
-// e.g. with base "/blog": "/blog/posts/slug" → "/posts/slug"
 const relativePath = stripBase(Astro.url.pathname);
 const pathWithoutTrailingSlash =
   relativePath.endsWith("/") && relativePath !== "/"
     ? relativePath.slice(0, -1)
     : relativePath;
-
 const currentPath = stripLocale(pathWithoutTrailingSlash, locale);
 
 const isActive = (path: string) => {
-  const currentPathArray = currentPath.split("/").filter(p => p.trim());
-  const pathArray = path.split("/").filter(p => p.trim());
-  return currentPath === path || currentPathArray[0] === pathArray[0];
+  if (path === "/") return currentPath === "/" || currentPath === "";
+  const cur  = currentPath.split("/").filter(p => p.trim());
+  const comp = path.split("/").filter(p => p.trim());
+  return currentPath === path || cur[0] === comp[0];
 };
+
+const navItems = [
+  { label: "НАЧАЛО",   href: getRelativeLocaleUrl(locale, ""),        match: "/" },
+  { label: "БЛОГ",     href: getRelativeLocaleUrl(locale, "posts"),   match: "/posts" },
+  { label: "ЗА НАС",   href: getRelativeLocaleUrl(locale, "about"),   match: "/about" },
+  { label: "РЕСУРСИ",  href: getRelativeLocaleUrl(locale, "tags"),    match: "/tags" },
+  { label: "КОНТАКТИ", href: "mailto:hello@ai-vt.club",               match: "/contact" },
+];
 ---
 
 <a
@@ -39,157 +40,316 @@ const isActive = (path: string) => {
   href="#main-content"
   class="bg-background text-accent absolute inset-s-16 -top-full z-50 px-3 py-2 backdrop-blur-lg transition-all focus:top-4"
 >
-  {t.a11y.skipToContent}
+  Към съдържанието
 </a>
 
-<header
-  class="app-layout flex flex-col items-center justify-between sm:flex-row"
->
+<header id="site-header" class="sticky top-0 z-40 w-full">
+  <!-- Frosted glass background -->
   <div
-    class="border-border bg-background relative flex w-full items-baseline justify-between border-b py-4 sm:items-center sm:py-6"
-  >
+    class="pointer-events-none absolute inset-0"
+    style="background: color-mix(in srgb, var(--background) 92%, transparent); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);"
+  ></div>
+
+  <!-- Bottom border (appears on scroll) -->
+  <div
+    class="nav-border pointer-events-none absolute inset-x-0 bottom-0 h-px"
+    style="background: var(--border);"
+  ></div>
+
+  <!-- Content row -->
+  <div class="app-wide relative flex items-center justify-between gap-4 py-3 site-header-row">
+
+    <!-- Logo (wordmark) -->
     <a
       href={getRelativeLocaleUrl(locale, "")}
-      class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
+      class="group site-logo flex shrink-0 items-center gap-3"
+      aria-label={site.title}
     >
-      {site.title}
+      <img
+        src="/logo-transparent.png"
+        alt="AI-VT Club"
+        width="96"
+        height="96"
+        class="site-logo-img shrink-0 object-contain transition-transform duration-300 ease-out group-hover:scale-105 dark:brightness-125 dark:contrast-110 dark:drop-shadow-[0_0_14px_rgba(167,139,250,0.45)]"
+        loading="eager"
+      />
+      <span class="site-logo-text flex flex-col leading-none">
+        <span class="site-logo-title">AI-VT<span style="color: var(--gold);">.</span>CLUB</span>
+        <span class="site-logo-tagline">AI ЗА ВЕЛИКО ТЪРНОВО</span>
+      </span>
     </a>
-    <nav
-      id="nav-menu"
-      class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
-    >
-      <button
-        id="menu-btn"
-        class="focus-outline self-end p-2 sm:hidden"
-        aria-label={t.a11y.openMenu}
-        aria-expanded="false"
-        aria-controls="menu-items"
-        data-label-open={t.a11y.openMenu}
-        data-label-close={t.a11y.closeMenu}
-      >
-        <IconX id="close-icon" class="hidden" />
-        <IconMenuDeep id="menu-icon" />
-      </button>
-      <ul
-        id="menu-items"
-        class="[&>li>a]:hover:text-accent mt-4 hidden w-44 grid-cols-2 place-content-center gap-2 sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0 sm:[&>li]:h-8 [&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium sm:[&>li>a]:px-2 sm:[&>li>a]:py-1"
-      >
-        <li class="col-span-2">
-          <a
-            href={getRelativeLocaleUrl(locale, "posts")}
-            class:list={{ "active-nav": isActive("/posts") }}
-          >
-            {t.nav.posts}
-          </a>
-        </li>
-        <li class="col-span-2">
-          <a
-            href={getRelativeLocaleUrl(locale, "tags")}
-            class:list={{ "active-nav": isActive("/tags") }}
-          >
-            {t.nav.tags}
-          </a>
-        </li>
-        <li class="col-span-2">
-          <a
-            href={getRelativeLocaleUrl(locale, "about")}
-            class:list={{ "active-nav": isActive("/about") }}
-          >
-            {t.nav.about}
-          </a>
-        </li>
-        {
-          features.showArchives && (
-            <li class="col-span-2">
-              <LinkButton
-                href={getRelativeLocaleUrl(locale, "archives")}
-                class:list={[
-                  "focus-outline flex size-full justify-center p-3 sm:relative sm:size-8 sm:p-0",
-                  { "active-nav": isActive("/archives") },
-                ]}
-                title={t.nav.archives}
-                aria-label={t.nav.archives}
-              >
-                <IconArchive class="hidden sm:absolute sm:top-1/2 sm:left-1/2 sm:block sm:size-6 sm:-translate-x-1/2 sm:-translate-y-1/2" />
-                <span class="sm:sr-only">{t.nav.archives}</span>
-                {isActive("/archives") && (
-                  <IconUnderline
-                    aria-hidden="true"
-                    class="scale-125 max-sm:hidden sm:absolute sm:bottom-0 sm:w-6"
-                  />
-                )}
-              </LinkButton>
-            </li>
-          )
-        }
-        {
-          features.search !== false && (
-            <li class="col-span-1 flex items-center justify-center">
-              <LinkButton
-                href={getRelativeLocaleUrl(locale, "search")}
-                class:list={["focus-outline relative size-8"]}
-                title={t.nav.search}
-                aria-label={t.nav.search}
-              >
-                <IconSearch class="absolute top-1/2 left-1/2 size-6 -translate-x-1/2 -translate-y-1/2" />
-                <span class="sr-only">{t.nav.search}</span>
-                {isActive("/search") && (
-                  <IconUnderline
-                    aria-hidden="true"
-                    class="absolute bottom-0 w-6 scale-125 max-sm:inset-s-2"
-                  />
-                )}
-              </LinkButton>
-            </li>
-          )
-        }
-        {
-          features.lightAndDarkMode && (
-            <li class="col-span-1 flex items-center justify-center">
-              <button
-                id="theme-btn"
-                class="focus-outline hover:[&>svg]:stroke-accent relative size-12 p-4 sm:size-8"
-                title={t.a11y.toggleTheme}
-                aria-label="auto"
-                aria-live="polite"
-              >
-                <IconMoon class="absolute top-[50%] left-[50%] translate-[-50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-                <IconSunHigh class="absolute top-[50%] left-[50%] translate-[-50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-              </button>
-            </li>
-          )
-        }
+
+    <!-- Center nav -->
+    <nav id="nav-menu" class="hidden lg:flex flex-1 items-center justify-center">
+      <ul class="flex items-center gap-1">
+        {navItems.map(item => (
+          <li>
+            <a
+              href={item.href}
+              class:list={[
+                "nav-link relative inline-flex items-center rounded-md px-3 py-2 text-[0.78rem] font-bold uppercase tracking-[0.14em] transition-all duration-200",
+                {
+                  "nav-link-active": isActive(item.match),
+                },
+              ]}
+            >
+              {item.label}
+              {item.label === "БЛОГ" && (
+                <span aria-hidden="true" class="ml-1 text-[0.6rem] opacity-60">▾</span>
+              )}
+            </a>
+          </li>
+        ))}
       </ul>
     </nav>
+
+    <!-- Right cluster: Subscribe + socials + search + theme -->
+    <div class="hidden lg:flex shrink-0 items-center gap-3">
+      <a href="mailto:hello@ai-vt.club?subject=Абонамент" class="btn-subscribe">
+        АБОНИРАЙ СЕ
+      </a>
+
+      <div class="flex items-center gap-1.5" style="color: var(--muted-foreground);">
+        <a
+          href="https://www.facebook.com/groups/ai.vt.club"
+          target="_blank" rel="noopener"
+          class="icon-btn"
+          aria-label="Facebook"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="M22 12a10 10 0 1 0-11.563 9.876v-6.987H7.898V12h2.539V9.797c0-2.506 1.493-3.89 3.776-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.774l-.443 2.889h-2.331v6.987A10.002 10.002 0 0 0 22 12Z"/>
+          </svg>
+        </a>
+        <a
+          href="https://www.linkedin.com/company/ai-vt-club"
+          target="_blank" rel="noopener"
+          class="icon-btn"
+          aria-label="LinkedIn"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.65-1.85 3.39-1.85 3.62 0 4.29 2.38 4.29 5.48v6.26ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13Zm-1.78 13.02h3.55V9H3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.55C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.72C24 .77 23.2 0 22.22 0Z"/>
+          </svg>
+        </a>
+        {features.search !== false && (
+          <LinkButton
+            href={getRelativeLocaleUrl(locale, "search")}
+            class="icon-btn"
+            title="Търсене"
+            aria-label="Търсене"
+          >
+            <IconSearch class="size-[18px]" />
+          </LinkButton>
+        )}
+        {features.lightAndDarkMode && (
+          <button
+            id="theme-btn"
+            class="icon-btn"
+            title="Смени темата"
+            aria-label="auto"
+            aria-live="polite"
+          >
+            <IconMoon class="absolute size-[18px] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+            <IconSunHigh class="absolute size-[18px] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+          </button>
+        )}
+      </div>
+    </div>
+
+    <!-- Mobile burger -->
+    <button
+      id="menu-btn"
+      class="focus-outline lg:hidden rounded-lg p-2"
+      aria-label="Меню"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <IconX id="close-icon" class="hidden size-6" />
+      <IconMenuDeep id="menu-icon" class="size-6" />
+    </button>
+  </div>
+
+  <!-- Mobile drawer -->
+  <div
+    id="mobile-menu"
+    class="hidden lg:hidden relative border-t app-wide py-4"
+    style="border-color: var(--border);"
+  >
+    <ul class="flex flex-col gap-1">
+      {navItems.map(item => (
+        <li>
+          <a
+            href={item.href}
+            class:list={[
+              "block rounded-md px-3 py-2.5 text-sm font-bold uppercase tracking-[0.14em]",
+              { "nav-link-active": isActive(item.match) },
+            ]}
+            style="color: var(--foreground);"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="mt-3 flex flex-wrap items-center gap-3 border-t pt-4" style="border-color: var(--border);">
+      <a href="mailto:hello@ai-vt.club?subject=Абонамент" class="btn-subscribe">АБОНИРАЙ СЕ</a>
+      <a href="https://www.facebook.com/groups/ai.vt.club" target="_blank" rel="noopener" class="icon-btn" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.563 9.876v-6.987H7.898V12h2.539V9.797c0-2.506 1.493-3.89 3.776-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.774l-.443 2.889h-2.331v6.987A10.002 10.002 0 0 0 22 12Z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/company/ai-vt-club" target="_blank" rel="noopener" class="icon-btn" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.65-1.85 3.39-1.85 3.62 0 4.29 2.38 4.29 5.48v6.26ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13Zm-1.78 13.02h3.55V9H3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.55C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.72C24 .77 23.2 0 22.22 0Z"/></svg>
+      </a>
+      {features.search !== false && (
+        <LinkButton href={getRelativeLocaleUrl(locale, "search")} class="icon-btn" aria-label="Търсене">
+          <IconSearch class="size-[18px]" />
+        </LinkButton>
+      )}
+      {features.lightAndDarkMode && (
+        <button id="theme-btn-mobile" class="icon-btn" aria-label="Смени темата">
+          <IconMoon class="absolute size-[18px] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+          <IconSunHigh class="absolute size-[18px] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+        </button>
+      )}
+    </div>
   </div>
 </header>
 
 <script>
+  function initScrollBorder() {
+    const header = document.getElementById("site-header");
+    if (!header) return;
+    const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 16);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
   function toggleNav() {
-    const menuBtn = document.querySelector<HTMLButtonElement>("#menu-btn");
-    const menuItems = document.querySelector("#menu-items");
-    const menuIcon = document.querySelector("#menu-icon");
+    const menuBtn   = document.querySelector<HTMLButtonElement>("#menu-btn");
+    const menu      = document.querySelector("#mobile-menu");
+    const menuIcon  = document.querySelector("#menu-icon");
     const closeIcon = document.querySelector("#close-icon");
-
-    if (!menuBtn || !menuItems || !menuIcon || !closeIcon) return;
-
-    const openLabel = menuBtn.dataset.labelOpen ?? "Open menu";
-    const closeLabel = menuBtn.dataset.labelClose ?? "Close menu";
+    if (!menuBtn || !menu || !menuIcon || !closeIcon) return;
 
     menuBtn.addEventListener("click", () => {
-      const openMenu = menuBtn.getAttribute("aria-expanded") === "true";
-
-      menuBtn.setAttribute("aria-expanded", openMenu ? "false" : "true");
-      menuBtn.setAttribute("aria-label", openMenu ? openLabel : closeLabel);
-
-      menuItems.classList.toggle("hidden");
-      menuItems.classList.toggle("grid");
+      const open = menuBtn.getAttribute("aria-expanded") === "true";
+      menuBtn.setAttribute("aria-expanded", open ? "false" : "true");
+      menu.classList.toggle("hidden");
       menuIcon.classList.toggle("hidden");
       closeIcon.classList.toggle("hidden");
     });
   }
 
+  initScrollBorder();
   toggleNav();
 
-  document.addEventListener("astro:after-swap", toggleNav);
+  document.addEventListener("astro:after-swap", () => {
+    initScrollBorder();
+    toggleNav();
+  });
 </script>
+
+<style>
+  /* ── Logo ─────────────────────── */
+  .site-logo-img {
+    width: 3rem;
+    height: 3rem;
+  }
+  @media (min-width: 640px) {
+    .site-logo-img { width: 3.5rem; height: 3.5rem; }
+  }
+  .site-logo-text { gap: 0.18rem; }
+  .site-logo-title {
+    font-family: var(--font-app), system-ui, sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    font-size: 1.15rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+  @media (min-width: 640px) {
+    .site-logo-title { font-size: 1.4rem; }
+  }
+  .site-logo-tagline {
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: var(--muted-foreground);
+    line-height: 1;
+  }
+  @media (min-width: 640px) {
+    .site-logo-tagline { font-size: 0.62rem; }
+  }
+
+  /* ── Scrolled compact state ──── */
+  .site-header-row { transition: padding 0.3s ease-out; }
+  #site-header.scrolled .site-header-row { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+  #site-header.scrolled .site-logo-img { width: 2.4rem; height: 2.4rem; }
+  #site-header.scrolled .site-logo-title { font-size: 1.05rem; }
+  #site-header.scrolled .site-logo-tagline { font-size: 0.5rem; letter-spacing: 0.18em; }
+
+  /* ── Nav links ───────────────── */
+  .nav-link {
+    color: var(--muted-foreground);
+  }
+  .nav-link:hover {
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
+  }
+  .nav-link-active {
+    color: var(--accent) !important;
+  }
+  .nav-link-active::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -2px;
+    width: 22px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--gradient-gold);
+    transform: translateX(-50%);
+  }
+
+  /* ── Subscribe button ────────── */
+  .btn-subscribe {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--accent-foreground);
+    background: var(--gradient-brand);
+    box-shadow: 0 4px 14px rgba(76, 29, 149, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transition: transform 0.2s var(--ease-spring), box-shadow 0.2s, opacity 0.2s;
+  }
+  .btn-subscribe:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(76, 29, 149, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+
+  /* ── Icon button (social/search/theme) ── */
+  .icon-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 9px;
+    color: var(--muted-foreground);
+    transition: color 0.2s, background 0.2s, transform 0.2s var(--ease-spring);
+  }
+  .icon-btn:hover {
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    transform: translateY(-1px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-logo-img, .site-header-row, .btn-subscribe, .icon-btn {
+      transition: none !important;
+    }
+  }
+</style>

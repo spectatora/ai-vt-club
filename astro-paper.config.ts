@@ -2,19 +2,20 @@ import { defineAstroPaperConfig } from "./src/types/config";
 
 export default defineAstroPaperConfig({
   site: {
-    url: "https://astro-paper.pages.dev/",
-    title: "AstroPaper",
-    description: "A minimal, responsive and SEO-friendly Astro blog theme.",
-    author: "Sat Naing",
-    profile: "https://satna.ing",
+    url: "https://ai-vt.club/",
+    title: "AI-VT Club",
+    description:
+      "Независимата общност за изкуствен интелект и хроника на събитията във Велико Търново.",
+    author: "AI-VT Club",
+    profile: "https://ai-vt.club",
     ogImage: "default-og.jpg",
-    lang: "en",
-    timezone: "Asia/Bangkok",
+    lang: "en",           /* Astro i18n routing locale — content is bilingual BG/EN */
+    timezone: "Europe/Sofia",
     dir: "ltr",
   },
   posts: {
-    perPage: 4,
-    perIndex: 4,
+    perPage: 6,
+    perIndex: 6,
     scheduledPostMargin: 15 * 60 * 1000,
   },
   features: {
@@ -23,23 +24,19 @@ export default defineAstroPaperConfig({
     showArchives: true,
     showBackButton: true,
     editPost: {
-      enabled: true,
-      url: "https://github.com/satnaing/astro-paper/edit/main/",
+      enabled: false,
     },
     search: "pagefind",
   },
   socials: [
-    { name: "github",   url: "https://github.com/satnaing/astro-paper" },
-    { name: "x",        url: "https://x.com/username" },
-    { name: "linkedin", url: "https://www.linkedin.com/in/username/" },
-    { name: "mail",     url: "mailto:yourmail@gmail.com" },
+    { name: "facebook", url: "https://www.facebook.com/groups/ai.vt.club" },
+    { name: "linkedin", url: "https://www.linkedin.com/company/ai-vt-club" },
+    { name: "mail",     url: "mailto:hello@ai-vt.club" },
   ],
   shareLinks: [
-    { name: "whatsapp", url: "https://wa.me/?text=" },
     { name: "facebook", url: "https://www.facebook.com/sharer.php?u=" },
     { name: "x",        url: "https://x.com/intent/post?url=" },
     { name: "telegram", url: "https://t.me/share/url?url=" },
-    { name: "pinterest", url: "https://pinterest.com/pin/create/button/?url=" },
-    { name: "mail",     url: "mailto:?subject=See%20this%20post&body=" },
+    { name: "mail",     url: "mailto:?subject=Виж%20тази%20статия&body=" },
   ],
 });

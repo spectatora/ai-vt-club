@@ -6,6 +6,7 @@ import { resolveDefaultOgImagePath } from "@/utils/resolveDefaultOgImagePath";
 import { getAssetPath } from "@/utils/withBase";
 import config from "@/config";
 import "@/styles/global.css";
+import NeuralBackground from "@/components/NeuralBackground.astro";
 
 type Props = {
   title?: string;
@@ -33,14 +34,15 @@ const rssHref = getRelativeLocaleUrl(
 <!doctype html>
 <html
   dir={site.dir ?? "ltr"}
-  lang={Astro.currentLocale ?? site.lang}
+  lang="bg"
   class="overflow-y-scroll scroll-smooth"
 >
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href={getAssetPath("favicon.svg")} />
-    <link rel="icon" href={getAssetPath("favicon.ico")} />
+    <link rel="icon" href={getAssetPath("favicon.ico")} sizes="any" />
+    <link rel="icon" type="image/png" sizes="192x192" href={getAssetPath("favicon-192.png")} />
+    <link rel="apple-touch-icon" sizes="512x512" href={getAssetPath("apple-touch-icon.png")} />
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
 
@@ -95,19 +97,12 @@ const rssHref = getRelativeLocaleUrl(
       )
     }
 
-    <!--
-      Inline FOUC-prevention script: sets data-theme on <html> before
-      the browser paints. Runs synchronously, no defer/async.
-    -->
+    <!-- FOUC-prevention: sets data-theme on <html> before paint. Defaults to light. -->
     <script is:inline>
       (function () {
         const stored = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
-        const theme = stored ?? (prefersDark ? "dark" : "light");
+        const theme = stored ?? "light";
         document.firstElementChild?.setAttribute("data-theme", theme);
-        // Expose value so theme.ts can skip re-detection.
         window.__theme = { value: theme };
       })();
     </script>
@@ -115,8 +110,9 @@ const rssHref = getRelativeLocaleUrl(
     <ClientRouter />
   </head>
   <body
-    class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col"
+    class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground isolate flex min-h-svh flex-col"
   >
+    <NeuralBackground />
     <slot />
     <script>
       import "@/scripts/theme";

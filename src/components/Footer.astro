@@ -1,30 +1,384 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import Socials from "./Socials.astro";
-import { useTranslations } from "@/i18n";
 
 type Props = {
   noMarginTop?: boolean;
 } & HTMLAttributes<"footer">;
 
 const { noMarginTop = false, class: className, ...attrs } = Astro.props;
-
-const t = useTranslations(Astro.currentLocale);
-const currentYear = new Date().getFullYear();
+const year = new Date().getFullYear();
 ---
 
 <footer
-  class:list={["app-layout", { "mt-auto": !noMarginTop }, className]}
+  class:list={["site-footer w-full", { "mt-auto": !noMarginTop }, className]}
   {...attrs}
 >
-  <div
-    class="border-border flex flex-col items-center justify-between border-t py-6 sm:flex-row-reverse sm:py-4"
-  >
-    <Socials />
-    <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row">
-      <span>{t.footer.copyright} &#169; {currentYear}</span>
-      <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-      <span>{t.footer.allRightsReserved}</span>
+  <!-- Hero illustration backdrop: castle + lion (left) + AI shield (right) + flowing gold wave -->
+  <div class="footer-bg" aria-hidden="true">
+    <img
+      src="/footer-bg.png"
+      alt=""
+      width="1983"
+      height="793"
+      loading="lazy"
+      decoding="async"
+    />
+    <!-- Soft top fade so the image blends into the page -->
+    <div class="footer-bg-fade" aria-hidden="true"></div>
+  </div>
+
+  <div class="footer-body">
+    <div class="app-wide footer-grid">
+
+      <!-- Brand block -->
+      <div class="footer-brand">
+        <a href="/" class="footer-brand-link" aria-label="AI-VT Club">
+          <img
+            src="/logo-transparent.png"
+            alt="AI-VT Club"
+            width="64"
+            height="64"
+            class="footer-brand-logo"
+            loading="lazy"
+          />
+          <span class="footer-brand-text">
+            <span class="footer-brand-title">AI-VT<span class="footer-brand-dot">.</span>CLUB</span>
+            <span class="footer-brand-tagline">AI ЗА ВЕЛИКО ТЪРНОВО</span>
+          </span>
+        </a>
+        <p class="footer-brand-blurb">
+          Независимата общност за изкуствен интелект<br/>
+          и хроника на събитията в&nbsp;старата&nbsp;столица.
+        </p>
+      </div>
+
+      <!-- Quick links -->
+      <nav class="footer-nav" aria-label="Footer">
+        <h4 class="footer-col-title">Навигация</h4>
+        <ul>
+          <li><a class="footer-link" href="/">Начало</a></li>
+          <li><a class="footer-link" href="/posts">Блог</a></li>
+          <li><a class="footer-link" href="/about">За нас</a></li>
+          <li><a class="footer-link" href="/tags">Ресурси</a></li>
+          <li><a class="footer-link" href="mailto:hello@ai-vt.club">Контакти</a></li>
+        </ul>
+      </nav>
+
+      <!-- Subscribe / socials -->
+      <div class="footer-cta">
+        <h4 class="footer-col-title">Бъди с&nbsp;нас</h4>
+        <p class="footer-cta-text">
+          Получавай най-новите AI статии и&nbsp;събития от&nbsp;Велико&nbsp;Търново директно в&nbsp;имейла&nbsp;си.
+        </p>
+        <a href="mailto:hello@ai-vt.club?subject=Абонамент" class="footer-subscribe">
+          АБОНИРАЙ СЕ
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </a>
+        <div class="footer-socials" aria-label="Социални">
+          <a href="https://www.facebook.com/groups/ai.vt.club" target="_blank" rel="noopener" class="footer-social" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M22 12a10 10 0 1 0-11.563 9.876v-6.987H7.898V12h2.539V9.797c0-2.506 1.493-3.89 3.776-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.774l-.443 2.889h-2.331v6.987A10.002 10.002 0 0 0 22 12Z"/>
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/company/ai-vt-club" target="_blank" rel="noopener" class="footer-social" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.65-1.85 3.39-1.85 3.62 0 4.29 2.38 4.29 5.48v6.26ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13Zm-1.78 13.02h3.55V9H3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.55C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.72C24 .77 23.2 0 22.22 0Z"/>
+            </svg>
+          </a>
+          <a href="mailto:hello@ai-vt.club" class="footer-social" aria-label="Email">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2"/>
+              <path d="M3 7l9 6 9-6"/>
+            </svg>
+          </a>
+          <a href="/rss.xml" class="footer-social" aria-label="RSS">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 11a9 9 0 0 1 9 9"/>
+              <path d="M4 4a16 16 0 0 1 16 16"/>
+              <circle cx="5" cy="19" r="1.6" fill="currentColor"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom strip -->
+    <div class="footer-bottom">
+      <div class="app-wide footer-bottom-row">
+        <p>© {year} AI-VT Club · Изградено с любов във Велико Търново</p>
+        <p>
+          Powered by
+          <a href="https://astro.build" target="_blank" rel="noopener" class="footer-tiny-link">Astro</a>
+          ·
+          <a href="https://github.com/satnaing/astro-paper" target="_blank" rel="noopener" class="footer-tiny-link">AstroPaper</a>
+        </p>
+      </div>
     </div>
   </div>
 </footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    margin-top: 3rem;
+    isolation: isolate;
+    overflow: hidden;
+    /* Footer is always dark (the bg image is dark purple) */
+    color: #F2EEFE;
+  }
+
+  /* ── Background image layer ───────────────── */
+  .footer-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background: linear-gradient(180deg, #1A0F45 0%, #14093A 100%);
+  }
+  .footer-bg img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center bottom;
+    opacity: 0.95;
+  }
+  /* Soft top fade so the footer transitions cleanly out of the page above */
+  .footer-bg-fade {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 100px;
+    background: linear-gradient(180deg, var(--background) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  /* In dark mode the bg above the footer is already dark, so soften the fade */
+  :global([data-theme="dark"]) .footer-bg-fade {
+    opacity: 0.3;
+  }
+
+  /* ── Inner body ───────────────────────────── */
+  .footer-body {
+    position: relative;
+    z-index: 2;
+  }
+
+  .footer-grid {
+    display: grid;
+    gap: 2.5rem;
+    padding: 4rem 1rem 3rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 720px) {
+    .footer-grid {
+      grid-template-columns: 1.4fr 1fr 1.2fr;
+      gap: 3rem;
+      padding: 5rem 1.5rem 3.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .footer-grid {
+      padding: 6rem 2.5rem 4rem;
+      gap: 4rem;
+    }
+  }
+
+  /* ── Brand column ─────────────────────────── */
+  .footer-brand-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    text-decoration: none;
+    color: inherit;
+  }
+  .footer-brand-logo {
+    width: 3.2rem;
+    height: 3.2rem;
+    object-fit: contain;
+    filter: brightness(1.25) drop-shadow(0 0 14px rgba(167, 139, 250, 0.45));
+    transition: transform 0.3s var(--ease-spring);
+  }
+  .footer-brand-link:hover .footer-brand-logo {
+    transform: scale(1.06) rotate(-2deg);
+  }
+  .footer-brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+    line-height: 1;
+  }
+  .footer-brand-title {
+    font-weight: 800;
+    letter-spacing: 0.045em;
+    font-size: 1.35rem;
+    color: #E8E3FA;
+  }
+  .footer-brand-dot {
+    color: #E8C07A;
+  }
+  .footer-brand-tagline {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: rgba(232, 192, 122, 0.85);
+  }
+  .footer-brand-blurb {
+    margin-top: 1.15rem;
+    font-size: 0.88rem;
+    line-height: 1.62;
+    color: rgba(242, 238, 254, 0.72);
+    max-width: 22rem;
+  }
+
+  /* ── Column titles ────────────────────────── */
+  .footer-col-title {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(232, 192, 122, 0.95);
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+  .footer-col-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 30px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--gradient-gold);
+  }
+
+  /* ── Nav links ────────────────────────────── */
+  .footer-nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(242, 238, 254, 0.78);
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s var(--ease-smooth), transform 0.2s var(--ease-spring);
+  }
+  .footer-link::before {
+    content: "›";
+    color: rgba(232, 192, 122, 0.65);
+    font-weight: 700;
+    transition: transform 0.2s var(--ease-spring);
+  }
+  .footer-link:hover {
+    color: #FFFFFF;
+    transform: translateX(2px);
+  }
+  .footer-link:hover::before {
+    transform: translateX(3px);
+    color: #E8C07A;
+  }
+
+  /* ── CTA column ───────────────────────────── */
+  .footer-cta-text {
+    margin: 0 0 1.25rem;
+    font-size: 0.88rem;
+    line-height: 1.62;
+    color: rgba(242, 238, 254, 0.78);
+    max-width: 22rem;
+  }
+  .footer-subscribe {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.3rem;
+    border-radius: 10px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: #1A1530;
+    background: var(--gradient-gold);
+    box-shadow:
+      0 6px 18px rgba(176, 141, 86, 0.32),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    text-decoration: none;
+    transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
+  }
+  .footer-subscribe:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 10px 28px rgba(176, 141, 86, 0.42),
+      inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  }
+
+  .footer-socials {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+  .footer-social {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: 9px;
+    color: rgba(242, 238, 254, 0.78);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(167, 139, 250, 0.22);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s var(--ease-spring);
+  }
+  .footer-social:hover {
+    color: #E8C07A;
+    border-color: rgba(232, 192, 122, 0.6);
+    background: rgba(232, 192, 122, 0.12);
+    transform: translateY(-2px);
+  }
+
+  /* ── Bottom strip ─────────────────────────── */
+  .footer-bottom {
+    position: relative;
+    border-top: 1px solid rgba(167, 139, 250, 0.18);
+    background: rgba(8, 4, 28, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .footer-bottom-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 1rem;
+    font-size: 0.75rem;
+    color: rgba(242, 238, 254, 0.65);
+  }
+  @media (min-width: 720px) {
+    .footer-bottom-row { flex-direction: row; }
+  }
+  .footer-tiny-link {
+    color: #E8C07A;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .footer-tiny-link:hover { opacity: 0.8; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-brand-logo, .footer-link, .footer-link::before, .footer-subscribe, .footer-social {
+      transition: none !important;
+    }
+  }
+</style>

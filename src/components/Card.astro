@@ -9,23 +9,122 @@ type Props = {
 } & CollectionEntry<"posts">;
 
 const { variant: Heading = "h2", id, data, filePath } = Astro.props;
+const { title, description, tags, ...props } = data;
+const postUrl = getPostUrl(id, filePath, Astro.currentLocale);
 
-const { title, description, ...props } = data;
+/* Show up to 3 tags as visual chips */
+const visibleTags = tags?.slice(0, 3) ?? [];
 ---
 
-<li class="my-6">
-  <a
-    href={getPostUrl(id, filePath, Astro.currentLocale)}
-    class:list={[
-      "text-accent inline-block text-lg font-medium",
-      "decoration-dashed underline-offset-4 hover:underline",
-      "focus-visible:no-underline focus-visible:underline-offset-0",
-    ]}
-  >
-    <Heading transition:name={slugifyStr(title.replaceAll(".", "-"))}>
-      {title}
-    </Heading>
-  </a>
-  <Datetime {...props} />
-  <p>{description}</p>
+<li class="group my-3 list-none">
+  <article class="post-card">
+    <!-- Tags row (optional) -->
+    {
+      visibleTags.length > 0 && (
+        <div class="mb-3 flex flex-wrap gap-1.5">
+          {visibleTags.map(tag => (
+            <span class="tag-chip">{tag}</span>
+          ))}
+        </div>
+      )
+    }
+
+    <!-- Title -->
+    <a
+      href={postUrl}
+      class="post-card-link block"
+    >
+      <Heading
+        class="text-lg font-semibold leading-snug tracking-tight transition-colors duration-200 sm:text-xl"
+        style="color: var(--foreground);"
+        transition:name={slugifyStr(title.replaceAll(".", "-"))}
+      >
+        {title}
+      </Heading>
+    </a>
+
+    <!-- Description -->
+    {description && (
+      <p class="mt-2 text-sm leading-relaxed" style="color: var(--muted-foreground);">
+        {description}
+      </p>
+    )}
+
+    <!-- Footer row -->
+    <div class="mt-4 flex items-center justify-between">
+      <Datetime {...props} />
+      <!-- Animated arrow -->
+      <span
+        aria-hidden="true"
+        class="translate-x-0 text-lg opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100"
+        style="color: var(--accent);"
+      >
+        →
+      </span>
+    </div>
+  </article>
 </li>
+
+<style>
+  /* ── Card surface ──────────────────────────────── */
+  .post-card {
+    position: relative;
+    padding: 1.25rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition:
+      transform     0.25s var(--ease-smooth),
+      box-shadow    0.25s var(--ease-smooth),
+      border-color  0.25s var(--ease-smooth);
+    overflow: hidden;
+  }
+
+  /* Hover lift + glow — works in both modes */
+  .post-card:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+    box-shadow: var(--card-shadow-hover);
+  }
+
+  /* Gradient underline on title link hover */
+  .post-card-link:hover h2,
+  .post-card-link:hover h3 {
+    color: var(--accent) !important;
+  }
+
+  /* Tag chip */
+  .tag-chip {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: lowercase;
+    background: var(--muted);
+    color: var(--muted-foreground);
+    border: 1px solid var(--border);
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .post-card:hover .tag-chip {
+    color: var(--foreground);
+  }
+
+  /* Subtle top gradient line — appears on hover */
+  .post-card::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background: var(--gradient-brand);
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-smooth);
+  }
+
+  .post-card:hover::before {
+    opacity: 1;
+  }
+</style>

@@ -52,13 +52,14 @@ export default defineConfig({
   },
   fonts: [
     {
-      name: "Google Sans Code",
+      name: "Inter",
       cssVariable: "--font-google-sans-code",
       provider: fontProviders.google(),
-      fallbacks: ["monospace"],
+      fallbacks: ["system-ui", "sans-serif"],
       weights: [300, 400, 500, 600, 700],
       styles: ["normal", "italic"],
-      formats: ["woff", "ttf"],
+      subsets: ["latin", "cyrillic"],
+      formats: ["woff2", "ttf"],   /* ttf required by satori for OG image generation */
     },
   ],
   env: {
