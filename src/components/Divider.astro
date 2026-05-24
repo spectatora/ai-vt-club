@@ -1,0 +1,228 @@
+---
+/**
+ * Divider — decorative AI-chip section separator.
+ *
+ * Renders a centered "AI" CPU chip with pin halos, two symmetric circuit
+ * arms extending horizontally with U-bend traces, a small gold midpoint
+ * marker on each arm, and a filled deep-purple end-cap dot. Theme-aware
+ * via `var(--accent)` and `var(--gold)` so it reads on either light or
+ * dark backgrounds.
+ *
+ * Props:
+ *   - size:  "sm" | "md" | "lg"  (default "md")
+ *   - class: extra wrapper classes
+ *   - label: accessible label override (omit for purely decorative)
+ */
+
+type Props = {
+  size?: "sm" | "md" | "lg";
+  class?: string;
+  label?: string;
+};
+
+const { size = "md", class: className, label } = Astro.props;
+
+const heights = { sm: "56px", md: "84px", lg: "120px" };
+const h = heights[size];
+---
+
+<div
+  class:list={["ai-divider", `is-${size}`, className]}
+  role={label ? "separator" : "presentation"}
+  aria-label={label}
+  aria-hidden={label ? undefined : "true"}
+  style={`--ai-divider-h: ${h}`}
+>
+  <svg
+    viewBox="0 0 1400 200"
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <!-- Coordinate system note:
+         center y = 100, chip centered at (700, 100), chip body 96×96
+         arms extend from chip edges (x≈652 left / x≈748 right) outward -->
+
+    <!-- ════════════════════════════ LEFT ARM ════════════════════════════ -->
+    <g class="ai-d-arm ai-d-left">
+      <!-- Far thin trace: end-cap → gold dot → start of circuit detail -->
+      <line x1="36"  y1="100" x2="500" y2="100"
+            stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" opacity="0.9"/>
+      <!-- Purple end-cap -->
+      <circle cx="36"  cy="100" r="7" fill="var(--accent)"/>
+      <circle cx="36"  cy="100" r="14" fill="var(--accent)" opacity="0.18"/>
+      <!-- Gold midpoint marker -->
+      <circle cx="290" cy="100" r="5" fill="var(--gold)"/>
+      <circle cx="290" cy="100" r="11" fill="var(--gold)" opacity="0.20" class="ai-d-gold-pulse"/>
+
+      <!-- Circuit detail: two parallel U-bend trace pairs -->
+      <g stroke="var(--accent)" stroke-width="1.8" fill="none"
+         stroke-linecap="round" stroke-linejoin="round">
+        <!-- Upper trace: rises over two stepped bumps then meets chip pin row -->
+        <path d="M500 100
+                 L520 100  L540 84   L596 84
+                 L612 68   L644 68"/>
+        <!-- Lower trace: mirrors upper -->
+        <path d="M500 100
+                 L520 100  L540 116  L596 116
+                 L612 132  L644 132"/>
+        <!-- Short vertical joins at each step -->
+        <path d="M540 84  V100 M540 116 V100"/>
+        <path d="M596 84  V100 M596 116 V100" opacity="0.55"/>
+      </g>
+      <!-- Solder dots along the U-bend joints -->
+      <g fill="var(--accent)">
+        <circle cx="520" cy="100" r="2.4"/>
+        <circle cx="540" cy="84"  r="2.4"/>
+        <circle cx="540" cy="116" r="2.4"/>
+        <circle cx="596" cy="84"  r="2"/>
+        <circle cx="596" cy="116" r="2"/>
+        <circle cx="612" cy="68"  r="2"/>
+        <circle cx="612" cy="132" r="2"/>
+        <circle cx="644" cy="68"  r="2.6"/>
+        <circle cx="644" cy="132" r="2.6"/>
+      </g>
+    </g>
+
+    <!-- ════════════════════════════ RIGHT ARM (mirror) ═══════════════════════ -->
+    <g class="ai-d-arm ai-d-right">
+      <line x1="900" y1="100" x2="1364" y2="100"
+            stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" opacity="0.9"/>
+      <circle cx="1364" cy="100" r="7"  fill="var(--accent)"/>
+      <circle cx="1364" cy="100" r="14" fill="var(--accent)" opacity="0.18"/>
+      <circle cx="1110" cy="100" r="5"  fill="var(--gold)"/>
+      <circle cx="1110" cy="100" r="11" fill="var(--gold)" opacity="0.20" class="ai-d-gold-pulse"/>
+
+      <g stroke="var(--accent)" stroke-width="1.8" fill="none"
+         stroke-linecap="round" stroke-linejoin="round">
+        <path d="M900 100
+                 L880 100  L860 84   L804 84
+                 L788 68   L756 68"/>
+        <path d="M900 100
+                 L880 100  L860 116  L804 116
+                 L788 132  L756 132"/>
+        <path d="M860 84  V100 M860 116 V100"/>
+        <path d="M804 84  V100 M804 116 V100" opacity="0.55"/>
+      </g>
+      <g fill="var(--accent)">
+        <circle cx="880" cy="100" r="2.4"/>
+        <circle cx="860" cy="84"  r="2.4"/>
+        <circle cx="860" cy="116" r="2.4"/>
+        <circle cx="804" cy="84"  r="2"/>
+        <circle cx="804" cy="116" r="2"/>
+        <circle cx="788" cy="68"  r="2"/>
+        <circle cx="788" cy="132" r="2"/>
+        <circle cx="756" cy="68"  r="2.6"/>
+        <circle cx="756" cy="132" r="2.6"/>
+      </g>
+    </g>
+
+    <!-- ════════════════════════════ CENTER CHIP — "AI" CPU ═══════════════════ -->
+    <g class="ai-d-chip" transform="translate(700 100)">
+      <!-- Radiating pin halos: 6 per side, finishing with tip circles -->
+      <g stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" class="ai-d-pins">
+        <!-- Top row -->
+        <line x1="-36" y1="-48" x2="-36" y2="-72"/>
+        <line x1="-22" y1="-48" x2="-22" y2="-78"/>
+        <line x1="-8"  y1="-48" x2="-8"  y2="-82"/>
+        <line x1="8"   y1="-48" x2="8"   y2="-82"/>
+        <line x1="22"  y1="-48" x2="22"  y2="-78"/>
+        <line x1="36"  y1="-48" x2="36"  y2="-72"/>
+        <!-- Bottom row -->
+        <line x1="-36" y1="48"  x2="-36" y2="72"/>
+        <line x1="-22" y1="48"  x2="-22" y2="78"/>
+        <line x1="-8"  y1="48"  x2="-8"  y2="82"/>
+        <line x1="8"   y1="48"  x2="8"   y2="82"/>
+        <line x1="22"  y1="48"  x2="22"  y2="78"/>
+        <line x1="36"  y1="48"  x2="36"  y2="72"/>
+        <!-- Left column -->
+        <line x1="-48" y1="-36" x2="-72" y2="-36"/>
+        <line x1="-48" y1="-22" x2="-78" y2="-22"/>
+        <line x1="-48" y1="-8"  x2="-82" y2="-8"/>
+        <line x1="-48" y1="8"   x2="-82" y2="8"/>
+        <line x1="-48" y1="22"  x2="-78" y2="22"/>
+        <line x1="-48" y1="36"  x2="-72" y2="36"/>
+        <!-- Right column -->
+        <line x1="48"  y1="-36" x2="72"  y2="-36"/>
+        <line x1="48"  y1="-22" x2="78"  y2="-22"/>
+        <line x1="48"  y1="-8"  x2="82"  y2="-8"/>
+        <line x1="48"  y1="8"   x2="82"  y2="8"/>
+        <line x1="48"  y1="22"  x2="78"  y2="22"/>
+        <line x1="48"  y1="36"  x2="72"  y2="36"/>
+      </g>
+      <!-- Pin tip dots -->
+      <g fill="var(--accent)" class="ai-d-pin-tips">
+        <circle cx="-36" cy="-72" r="2.6"/><circle cx="-22" cy="-78" r="2.6"/><circle cx="-8"  cy="-82" r="2.6"/>
+        <circle cx="8"   cy="-82" r="2.6"/><circle cx="22"  cy="-78" r="2.6"/><circle cx="36"  cy="-72" r="2.6"/>
+        <circle cx="-36" cy="72"  r="2.6"/><circle cx="-22" cy="78"  r="2.6"/><circle cx="-8"  cy="82"  r="2.6"/>
+        <circle cx="8"   cy="82"  r="2.6"/><circle cx="22"  cy="78"  r="2.6"/><circle cx="36"  cy="72"  r="2.6"/>
+        <circle cx="-72" cy="-36" r="2.6"/><circle cx="-78" cy="-22" r="2.6"/><circle cx="-82" cy="-8" r="2.6"/>
+        <circle cx="-82" cy="8"   r="2.6"/><circle cx="-78" cy="22"  r="2.6"/><circle cx="-72" cy="36" r="2.6"/>
+        <circle cx="72"  cy="-36" r="2.6"/><circle cx="78"  cy="-22" r="2.6"/><circle cx="82"  cy="-8" r="2.6"/>
+        <circle cx="82"  cy="8"   r="2.6"/><circle cx="78"  cy="22"  r="2.6"/><circle cx="72"  cy="36" r="2.6"/>
+      </g>
+
+      <!-- Chip body -->
+      <rect x="-48" y="-48" width="96" height="96" rx="10" ry="10"
+            fill="none" stroke="var(--accent)" stroke-width="2.2"/>
+      <!-- Inner inset ring -->
+      <rect x="-40" y="-40" width="80" height="80" rx="7" ry="7"
+            fill="none" stroke="var(--accent)" stroke-width="1" opacity="0.5"/>
+      <!-- "AI" wordmark -->
+      <text x="0" y="13"
+            text-anchor="middle"
+            font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif"
+            font-weight="800"
+            font-size="42"
+            fill="var(--accent)"
+            letter-spacing="1.5">AI</text>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .ai-divider {
+    display: block;
+    width: 100%;
+    height: var(--ai-divider-h, 84px);
+    margin: 0 auto;
+    pointer-events: none;
+    user-select: none;
+  }
+  .ai-divider svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow: visible;
+  }
+
+  /* Theme legibility — chip and arms in accent, slightly toned down */
+  :global([data-theme="light"]) .ai-divider svg { opacity: 0.88; }
+  :global([data-theme="dark"])  .ai-divider svg { opacity: 0.9; }
+
+  /* "Current flowing" pulse on the gold midpoint markers */
+  @media (prefers-reduced-motion: no-preference) {
+    .ai-d-gold-pulse {
+      transform-origin: center;
+      transform-box: fill-box;
+      animation: ai-d-glow 3.2s ease-in-out infinite;
+    }
+    .ai-d-pin-tips circle {
+      transform-origin: center;
+      transform-box: fill-box;
+      animation: ai-d-blink 5s ease-in-out infinite;
+    }
+    .ai-d-pin-tips circle:nth-child(odd) {
+      animation-delay: 1.5s;
+    }
+  }
+  @keyframes ai-d-glow {
+    0%, 100% { opacity: 0.12; transform: scale(1);    }
+    50%       { opacity: 0.40; transform: scale(1.45); }
+  }
+  @keyframes ai-d-blink {
+    0%, 100% { opacity: 1;    }
+    50%       { opacity: 0.45; }
+  }
+</style>
