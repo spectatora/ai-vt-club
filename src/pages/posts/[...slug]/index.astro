@@ -14,6 +14,7 @@ import BackButton from "./_components/BackButton.astro";
 import BackToTopButton from "./_components/BackToTopButton.astro";
 import AdjacentPostNav from "./_components/AdjacentPostNav.astro";
 import Divider from "@/components/Divider.astro";
+import { useTranslations } from "@/i18n";
 import config from "@/config";
 
 export async function getStaticPaths() {
@@ -58,6 +59,7 @@ type Props = {
 
 const { post, prevPost, nextPost } = Astro.props;
 const locale = Astro.currentLocale ?? config.site.lang;
+const t = useTranslations(locale);
 
 const {
   title,
@@ -110,6 +112,8 @@ const ogImage = ogImageUrl
     id="main-content"
     class:list={["app-layout pb-16", { "mt-8": !config.features.showBackButton }]}
     data-pagefind-body
+    data-copy-label={t.post.copyCode}
+    data-copied-label={t.post.codeCopied}
   >
     <!-- ── Post header ─────────────────────────── -->
     <header class="post-header border-b pb-8 pt-6" style="border-color: var(--border);">
@@ -235,7 +239,9 @@ const ogImage = ogImageUrl
   addHeadingLinks();
 
   function attachCopyButtons() {
-    const copyButtonLabel = "Copy";
+    const main = document.getElementById("main-content");
+    const copyButtonLabel = main?.dataset.copyLabel ?? "Copy";
+    const copiedLabel = main?.dataset.copiedLabel ?? "Copied";
     const codeBlocks = Array.from(document.querySelectorAll("pre"));
 
     for (const codeBlock of codeBlocks) {
@@ -270,7 +276,7 @@ const ogImage = ogImageUrl
 
       await navigator.clipboard.writeText(text ?? "");
 
-      button.innerText = "Copied";
+      button.innerText = copiedLabel;
 
       setTimeout(() => {
         button.innerText = copyButtonLabel;

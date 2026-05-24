@@ -21,6 +21,8 @@ export default {
     editPage: "Edit page",
     previousPost: "Previous Post",
     nextPost: "Next Post",
+    copyCode: "Copy",
+    codeCopied: "Copied",
   },
   pagination: {
     prev: "Prev",
@@ -62,6 +64,11 @@ export default {
     noResults: "No results found",
     goToPreviousPage: "Go to previous page",
     goToNextPage: "Go to next page",
+    breadcrumb: "breadcrumb",
+    paginationNav: "Pagination Navigation",
+    footerNav: "Footer",
+    search: "Search",
+    socials: "Social links",
   },
   notFound: {
     title: "404 Not Found",

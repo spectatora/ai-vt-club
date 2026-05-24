@@ -1,37 +1,23 @@
 ---
-title: "About"
-description: "A bit about me and this blog."
+title: "За нас"
+description: "За общността и този блог."
 ---
 
-AstroPaper is a minimal, accessible and SEO-friendly blog theme built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/).
+**AI-VT.CLUB** е независимата общност за изкуствен интелект във Велико Търново — място, в което хора, идеи и технологии се срещат, за да направят бъдещето малко по-достъпно.
 
-![Astro Paper](@/assets/images/astropaper-og.jpg)
+![AI-VT Club](@/assets/images/astropaper-og.jpg)
 
-AstroPaper provides a solid foundation for blogs, or even portfolios\_ with full markdown support, built-in dark mode, and a clean layout that works out-of-the-box.
+Тук пишем за практичните страни на AI: инструменти, които спестяват време, реални примери от бизнеса и ежедневието, и хроника на събитията във Велико Търново и региона.
 
-The blog posts in this theme also serve as guides, docs or example articles\_ making AstroPaper a flexible starting point for your next content-driven site.
+## Какво ще намериш тук
 
-## Features
+- Статии за AI инструменти и как да ги използваш
+- Полезни съвети и трикове за ежедневието и бизнеса
+- Новини и анонси за събития във Велико Търново
+- Истории и интервюта от местната общност
 
-AstroPaper comes with a set of useful features that make content publishing easy and effective:
+## Свържи се с нас
 
-- SEO-friendly
-- Fast performance
-- Light & dark mode
-- Highly customizable
-- Organizable blog posts
-- Responsive & accessible
-- Static search with [PageFind](https://pagefind.app/)
-- Automatic social image generation
+Имаш идея, въпрос или искаш да се включиш? Пиши ни на [hello@ai-vt.club](mailto:hello@ai-vt.club) или ни намери във [Facebook групата](https://www.facebook.com/groups/ai.vt.club) и в [LinkedIn](https://www.linkedin.com/company/ai-vt-club).
 
-and so much more.
-
-## Show your support
-
-If you like [AstroPaper](https://github.com/satnaing/astro-paper), consider giving it a star ⭐️.
-
-Found a bug 🐛 or have an improvement ✨ in mind? Feel free to open an [issue](https://github.com/satnaing/astro-paper/issues), submit a [pull request](https://github.com/satnaing/astro-paper/pulls) or start a [discussion](https://github.com/satnaing/astro-paper/discussions).
-
-If you find this theme helpful, you can also [sponsor me on GitHub](https://github.com/sponsors/satnaing) or [buy me a coffee](https://buymeacoffee.com/satnaing) to show your support — every penny counts.
-
-Kyay zuu! 🙏🏼
+Благодарим, че си с нас! 🙌

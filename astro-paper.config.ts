@@ -9,7 +9,7 @@ export default defineAstroPaperConfig({
     author: "AI-VT Club",
     profile: "https://ai-vt.club",
     ogImage: "default-og.jpg",
-    lang: "en",           /* Astro i18n routing locale — content is bilingual BG/EN */
+    lang: "bg",           /* Astro i18n routing locale */
     timezone: "Europe/Sofia",
     dir: "ltr",
   },

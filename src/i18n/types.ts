@@ -19,6 +19,8 @@ export interface UIStrings {
     editPage: string;
     previousPost: string;
     nextPost: string;
+    copyCode: string;
+    codeCopied: string;
   };
   pagination: {
     prev: string;
@@ -60,6 +62,11 @@ export interface UIStrings {
     noResults: string;
     goToPreviousPage: string;
     goToNextPage: string;
+    breadcrumb: string;
+    paginationNav: string;
+    footerNav: string;
+    search: string;
+    socials: string;
   };
   notFound: {
     title: string;
