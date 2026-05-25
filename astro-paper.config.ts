@@ -8,7 +8,7 @@ export default defineAstroPaperConfig({
       "Независимата общност за изкуствен интелект и хроника на събитията във Велико Търново.",
     author: "AI-VT Club",
     profile: "https://ai-vt.club",
-    ogImage: "default-og.jpg",
+    ogImage: "AI-VT-CLUB_og-image.jpg",
     lang: "bg",           /* Astro i18n routing locale */
     timezone: "Europe/Sofia",
     dir: "ltr",
