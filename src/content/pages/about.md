@@ -18,6 +18,6 @@ description: "За общността и този блог."
 
 ## Свържи се с нас
 
-Имаш идея, въпрос или искаш да се включиш? Пиши ни на [hello@ai-vt.club](mailto:hello@ai-vt.club) или ни намери във [Facebook групата](https://www.facebook.com/groups/ai.vt.club) и в [LinkedIn](https://www.linkedin.com/company/ai-vt-club).
+Имаш идея, въпрос или искаш да се включиш? Пиши ни на [hello@ai-vt.club](mailto:hello@ai-vt.club) или ни намери във [Facebook групата](https://www.facebook.com/people/AI-VT-Club/61590132702877/) и в [LinkedIn](https://www.linkedin.com/groups/19489003/).
 
 Благодарим, че си с нас! 🙌
