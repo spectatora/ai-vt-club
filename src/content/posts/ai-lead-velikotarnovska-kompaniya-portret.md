@@ -1,6 +1,6 @@
 ---
 author: AI-VT Club
-pubDatetime: 2026-06-02T08:00:00Z
+pubDatetime: 2026-06-30T08:00:00Z
 title: "Портрет: Кой е „AI Lead“ във великотърновска компания и какво всъщност прави"
 slug: ai-lead-velikotarnovska-kompaniya-portret
 featured: false
