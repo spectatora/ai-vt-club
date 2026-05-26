@@ -29,8 +29,8 @@ export default defineAstroPaperConfig({
     search: "pagefind",
   },
   socials: [
-    { name: "facebook", url: "https://www.facebook.com/groups/ai.vt.club" },
-    { name: "linkedin", url: "https://www.linkedin.com/company/ai-vt-club" },
+    { name: "facebook", url: "https://www.facebook.com/people/AI-VT-Club/61590132702877/" },
+    { name: "linkedin", url: "https://www.linkedin.com/groups/19489003/" },
     { name: "mail",     url: "mailto:hello@ai-vt.club" },
   ],
   shareLinks: [

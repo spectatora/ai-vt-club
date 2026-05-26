@@ -1,8 +1,24 @@
 ---
+import type { HTMLAttributes } from "astro/types";
 import config from "@/config";
 import LinkButton from "./LinkButton.astro";
 
+type Props = {
+  linkClass?: string;
+  iconClass?: string;
+  /** Use plain `<a>` tags instead of `LinkButton` (for header/footer styling). */
+  nativeLinks?: boolean;
+} & HTMLAttributes<"div">;
+
 const { site, socials } = config;
+
+const {
+  linkClass,
+  iconClass = "inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110",
+  nativeLinks = false,
+  class: className,
+  ...attrs
+} = Astro.props;
 
 const icons = import.meta.glob<{
   default: (_props: Record<string, unknown>) => unknown;
@@ -17,20 +33,35 @@ const items = await Promise.all(
       (url.startsWith("mailto:") || name === "mail"
         ? `Изпрати имейл на ${site.title}`
         : `${site.title} в ${name.charAt(0).toUpperCase() + name.slice(1)}`);
-    return { url, title, Icon };
+    const external = !url.startsWith("mailto:");
+    return { url, title, Icon, external };
   })
 );
 ---
 
-<div class="flex flex-wrap items-center gap-1">
+<div class:list={["flex flex-wrap items-center gap-1", className]} {...attrs}>
   {
-    items.map(({ url, title, Icon }) =>
+    items.map(({ url, title, Icon, external }) =>
       Icon ? (
-        <LinkButton href={url} class="p-2 hover:rotate-6 sm:p-1" title={title}>
-          <Icon class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
-          <span class="sr-only">{title}</span>
-        </LinkButton>
+        nativeLinks ? (
+          <a
+            href={url}
+            class={linkClass}
+            title={title}
+            aria-label={title}
+            target={external ? "_blank" : undefined}
+            rel={external ? "noopener noreferrer" : undefined}
+          >
+            <Icon class={iconClass} aria-hidden="true" />
+          </a>
+        ) : (
+          <LinkButton href={url} class:list={["p-2 hover:rotate-6 sm:p-1", linkClass]} title={title}>
+            <Icon class={iconClass} />
+            <span class="sr-only">{title}</span>
+          </LinkButton>
+        )
       ) : null
     )
   }
+  <slot />
 </div>

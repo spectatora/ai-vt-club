@@ -1,10 +1,10 @@
 ---
 author: AI-VT Club
-pubDatetime: 2026-06-04:00:00Z
+pubDatetime: 2026-06-04T08:00:00Z
 title: "От Царевец до ChatGPT: 5 неща, които AI открива за историята на Велико Търново"
 slug: ai-otkriva-istoriyata-na-veliko-tarnovo
 featured: false
-draft: false
+draft: true
 tags:
   - инструменти
   - местни проекти
