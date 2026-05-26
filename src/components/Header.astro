@@ -58,7 +58,7 @@ const navItems = [
   ></div>
 
   <!-- Content row -->
-  <div class="app-wide relative flex items-center justify-between gap-4 py-3 site-header-row">
+  <div class="app-wide relative flex items-center justify-between gap-4 site-header-row">
 
     <!-- Logo (wordmark) -->
     <a
@@ -266,12 +266,11 @@ const navItems = [
     .site-logo-tagline { font-size: 0.62rem; }
   }
 
-  /* ── Scrolled compact state ──── */
-  .site-header-row { transition: padding 0.3s ease-out; }
-  #site-header.scrolled .site-header-row { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-  #site-header.scrolled .site-logo-img { width: 2.4rem; height: 2.4rem; }
-  #site-header.scrolled .site-logo-title { font-size: 1.05rem; }
-  #site-header.scrolled .site-logo-tagline { font-size: 0.5rem; letter-spacing: 0.18em; }
+  /* ── Header row: stable height (no shrink on scroll) ──── */
+  .site-header-row {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
 
   /* ── Nav links ───────────────── */
   .nav-link {
