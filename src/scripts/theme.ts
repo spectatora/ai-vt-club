@@ -22,7 +22,9 @@ function persist(): void {
 
 function reflect(): void {
   document.firstElementChild?.setAttribute("data-theme", themeValue);
-  document.querySelector("#theme-btn")?.setAttribute("aria-label", themeValue);
+  document
+    .querySelectorAll("#theme-btn, #theme-btn-mobile")
+    .forEach(btn => btn.setAttribute("aria-label", themeValue));
 
   // Fill <meta name="theme-color"> with the computed background colour so
   // Android's browser chrome matches the page background.
@@ -34,10 +36,14 @@ function reflect(): void {
 
 function setup(): void {
   reflect();
-  document.querySelector("#theme-btn")?.addEventListener("click", () => {
-    themeValue = themeValue === LIGHT ? DARK : LIGHT;
-    persist();
-  });
+  document
+    .querySelectorAll("#theme-btn, #theme-btn-mobile")
+    .forEach(btn =>
+      btn.addEventListener("click", () => {
+        themeValue = themeValue === LIGHT ? DARK : LIGHT;
+        persist();
+      })
+    );
 }
 
 setup();
