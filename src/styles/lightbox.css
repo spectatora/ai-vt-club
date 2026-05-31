@@ -1,0 +1,150 @@
+/* ════════════════════════════════════════════
+   Image lightbox — click a post image to open a
+   full-screen, zoom- & pan-able viewer.
+════════════════════════════════════════════ */
+
+/* Affordance: post-body images are clickable */
+.app-prose img {
+  cursor: zoom-in;
+}
+
+/* Lock background scroll while the viewer is open */
+html.lb-lock {
+  overflow: hidden;
+}
+
+.lb-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  background: rgba(8, 5, 24, 0.93); /* deep purple-black */
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  touch-action: none;
+  overscroll-behavior: contain;
+}
+.lb-overlay.is-open {
+  display: block;
+  animation: fade-in 0.18s var(--ease-out, ease) both;
+}
+
+.lb-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  cursor: grab;
+}
+.lb-stage.is-grabbing {
+  cursor: grabbing;
+}
+
+.lb-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+  max-width: none; /* allow growth beyond viewport when zoomed */
+  border: 0;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* ── Controls ─────────────────────────────── */
+.lb-overlay button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(20, 16, 47, 0.6);
+  color: #f2eefe;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition:
+    color 0.15s,
+    border-color 0.15s,
+    background 0.15s,
+    transform 0.1s;
+}
+.lb-overlay button:hover {
+  color: var(--gold, #e8c07a);
+  border-color: var(--gold, #e8c07a);
+}
+.lb-overlay button:active {
+  transform: scale(0.92);
+}
+.lb-overlay button:focus-visible {
+  outline: 2px dashed var(--gold, #e8c07a);
+  outline-offset: 2px;
+}
+
+.lb-close {
+  position: absolute;
+  top: max(1rem, env(safe-area-inset-top));
+  right: max(1rem, env(safe-area-inset-right));
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.lb-tools {
+  position: absolute;
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.4rem;
+  border-radius: 9999px;
+  background: rgba(20, 16, 47, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.lb-tools button {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.lb-hint {
+  position: absolute;
+  top: max(1rem, env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100vw - 2rem);
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(20, 16, 47, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(242, 238, 254, 0.85);
+  font-size: 0.8rem;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+  animation:
+    fade-in 0.2s ease both,
+    lb-hint-out 0.5s ease 3s forwards;
+}
+
+@keyframes lb-hint-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lb-overlay.is-open,
+  .lb-hint {
+    animation: none;
+  }
+}
