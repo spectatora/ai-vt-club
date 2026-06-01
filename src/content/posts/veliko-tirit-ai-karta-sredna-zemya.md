@@ -2,7 +2,7 @@
 author: AI-VT Club
 pubDatetime: 2026-05-31T08:00:00Z
 modDatetime: 2026-05-31T20:00:00Z
-title: "От Царевец до Минас Тирит: как накарах AI да преначертае Велико Търново като Средната земя"
+title: "От Царевец до Минас Тирит: как накарахме AI да преначертае Велико Търново като Средната земя"
 slug: veliko-tirit-ai-karta-sredna-zemya
 featured: false
 draft: false
