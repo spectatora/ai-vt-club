@@ -16,7 +16,7 @@ description: "Pillar страница, която update-ваме месечно
 
 Тази страница е **жива справка** за всичко AI във Велико Търново и Великотърновска област. Update-ваме я в края на всеки месец.
 
-> 🗓 **Последно обновено:** 25 май 2026 г.
+> 🗓 **Последно обновено:** 6 юни 2026 г.
 > ✉️ **Знаеш инициатива, която сме пропуснали?** [Пиши ни](mailto:hello@ai-vt.club) — добавяме я в следващото обновление.
 
 ## Съдържание
@@ -111,12 +111,12 @@ description: "Pillar страница, която update-ваме месечно
 
 ### Предстоящи
 
-<!-- TODO: Текущ календар. Виж секцията „Събития“ на следните сайтове:
-  - velikoturnovo.info/en/events/
-  - eventspro.bg
-  - dev.bg/it-събития/
-  - Facebook events в групи „IT Events Bulgaria“, „AI Bulgaria“
-  - tamvt.com -->
+| Дата | Събитие | Тип | Подробно |
+| --- | --- | --- | --- |
+| 18 юни | Pie & AI: Veliko Tarnovo — MCPs, AI Workflows & Daily AI | Meetup (DeepLearning.AI) | [Preview](/posts/pie-ai-veliko-tarnovo-mcp-ai-workflows/) |
+
+<!-- TODO: Още събития. Източници: velikoturnovo.info/en/events/, eventspro.bg,
+  dev.bg/it-събития/, Eventbrite, Facebook „IT Events Bulgaria“ / „AI Bulgaria“, tamvt.com -->
 
 ---
 
