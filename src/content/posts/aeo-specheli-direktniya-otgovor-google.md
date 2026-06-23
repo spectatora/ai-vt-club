@@ -1,10 +1,10 @@
 ---
 author: AI-VT Club
-pubDatetime: 2026-05-29T09:00:00Z
+pubDatetime: 2026-06-13T08:00:00Z
 title: "AEO: как да спечелиш кутийката с директния отговор в Google"
 slug: aeo-specheli-direktniya-otgovor-google
 featured: false
-draft: true
+draft: false
 tags:
   - инструменти
   - бизнес
@@ -17,7 +17,7 @@ description: "Featured snippets, FAQ schema и гласово търсене. AE
 
 > 📚 Тази статия е **част 3** от поредицата **„Търсене в ерата на AI"**:
 > 1. [SEO, AEO и GEO: какво се промени](/posts/seo-aeo-geo-novoto-tarsene-s-ai)
-> 2. **GEO: как AI да цитира сайта ти]**
+> 2. [GEO: как да накараш ChatGPT и Perplexity да цитират сайта ти](/posts/geo-kak-ai-da-citira-sajta-ti)
 > 3. **AEO: спечели директния отговор в Google** ← тук си
 
 ## Съдържание

@@ -4,7 +4,7 @@ pubDatetime: 2026-06-07T08:00:00Z
 title: "Pie & AI идва във Велико Търново: MCP-та, AI workflows и AI в ежедневието"
 slug: pie-ai-veliko-tarnovo-mcp-ai-workflows
 featured: false
-draft: false
+draft: true
 tags:
   - събития
   - инструменти

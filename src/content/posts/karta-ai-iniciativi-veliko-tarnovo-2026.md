@@ -1,6 +1,7 @@
 ---
 author: AI-VT Club
 pubDatetime: 2026-05-25T08:00:00Z
+modDatetime: 2026-06-23T08:00:00Z
 title: "Голяма карта: всички AI инициативи във Велико Търново 2026"
 slug: karta-ai-iniciativi-veliko-tarnovo-2026
 featured: true
@@ -16,7 +17,7 @@ description: "Pillar страница, която update-ваме месечно
 
 Тази страница е **жива справка** за всичко AI във Велико Търново и Великотърновска област. Update-ваме я в края на всеки месец.
 
-> 🗓 **Последно обновено:** 6 юни 2026 г.
+> 🗓 **Последно обновено:** 23 юни 2026 г.
 > ✉️ **Знаеш инициатива, която сме пропуснали?** [Пиши ни](mailto:hello@ai-vt.club) — добавяме я в следващото обновление.
 
 ## Съдържание
@@ -108,12 +109,12 @@ description: "Pillar страница, която update-ваме месечно
 | --- | --- | --- | --- |
 | 18 апр | „AI – моят нов колега“ (TaM, Будни, Община) | Дискусия | [Recap](/posts/ai-moyat-nov-kolega-diskusiya-veliko-tarnovo/) |
 | <!-- TODO --> | Microsoft Build //localhost VT | Конференция | [Preview](/posts/microsoft-build-localhost-veliko-tarnovo/) |
+| 18 юни | Pie & AI: Veliko Tarnovo — MCPs, AI Workflows & Daily AI | Meetup (DeepLearning.AI) | [Recap](/posts/pie-ai-veliko-tarnovo-recap/) |
+| 20 юни | Gabrovo Digital Summit 2026 (RE:DEFINE) | Конференция (регион) | [Акценти](/posts/gabrovo-digital-summit-2026-ai/) |
 
 ### Предстоящи
 
-| Дата | Събитие | Тип | Подробно |
-| --- | --- | --- | --- |
-| 18 юни | Pie & AI: Veliko Tarnovo — MCPs, AI Workflows & Daily AI | Meetup (DeepLearning.AI) | [Preview](/posts/pie-ai-veliko-tarnovo-mcp-ai-workflows/) |
+Знаеш предстоящо AI събитие във Велико Търново или региона? [Пиши ни](mailto:hello@ai-vt.club) — добавяме го тук.
 
 <!-- TODO: Още събития. Източници: velikoturnovo.info/en/events/, eventspro.bg,
   dev.bg/it-събития/, Eventbrite, Facebook „IT Events Bulgaria“ / „AI Bulgaria“, tamvt.com -->
