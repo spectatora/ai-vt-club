@@ -1,10 +1,10 @@
 ---
 author: AI-VT Club
-pubDatetime: 2026-07-14T08:00:00Z
+pubDatetime: 2026-06-28T08:00:00Z
 title: "ChatGPT, Claude или Gemini — кой за какво (наръчник на български)"
 slug: chatgpt-claude-gemini-koy-za-kakvo
 featured: false
-draft: true
+draft: false
 tags:
   - инструменти
   - образование
