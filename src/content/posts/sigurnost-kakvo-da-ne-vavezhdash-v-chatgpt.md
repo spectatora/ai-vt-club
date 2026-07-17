@@ -1,10 +1,10 @@
 ---
 author: AI-VT Club
-pubDatetime: 2026-07-21T08:00:00Z
+pubDatetime: 2026-07-07T08:00:00Z
 title: "Какво да НЕ въвеждаш в ChatGPT: сигурност и поверителност за хора и фирми"
 slug: sigurnost-kakvo-da-ne-vavezhdash-v-chatgpt
 featured: false
-draft: true
+draft: false
 tags:
   - бизнес
   - образование

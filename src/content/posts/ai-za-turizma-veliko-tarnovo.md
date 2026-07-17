@@ -1,10 +1,10 @@
 ---
 author: AI-VT Club
-pubDatetime: 2026-07-16T08:00:00Z
+pubDatetime: 2026-07-03T08:00:00Z
 title: "AI за туризма във Велико Търново: 7 идеи за хотели, ресторанти и гидове"
 slug: ai-za-turizma-veliko-tarnovo
 featured: false
-draft: true
+draft: false
 tags:
   - бизнес
   - местни проекти

@@ -1,10 +1,10 @@
 ---
 author: AI-VT Club
-pubDatetime: 2026-07-28T08:00:00Z
+pubDatetime: 2026-07-11T08:00:00Z
 title: "AI в час 2: готови задачи и шаблони за великотърновските учители"
 slug: ai-v-chas-2-shabloni-za-uchiteli
 featured: false
-draft: true
+draft: false
 tags:
   - образование
   - инструменти

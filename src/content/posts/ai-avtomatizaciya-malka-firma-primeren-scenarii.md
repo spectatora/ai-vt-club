@@ -1,10 +1,10 @@
 ---
 author: AI-VT Club
-pubDatetime: 2026-07-30T08:00:00Z
+pubDatetime: 2026-07-14T08:00:00Z
 title: "Как малка фирма от Велико Търново може да автоматизира с AI: примерен сценарий стъпка по стъпка"
 slug: ai-avtomatizaciya-malka-firma-primeren-scenarii
 featured: false
-draft: true
+draft: false
 tags:
   - бизнес
   - местни проекти
