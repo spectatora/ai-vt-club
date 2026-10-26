@@ -3,7 +3,7 @@ author: AI-VT Club
 pubDatetime: 2026-10-25T08:00:00Z
 title: "Pie & AI Велико Търново #3 — recap: Доверие срещу проверка (първото онлайн издание, с пълен запис)"
 slug: pie-ai-veliko-tarnovo-trust-vs-verification-recap
-featured: false
+featured: true
 draft: false
 tags:
   - събития

@@ -3,7 +3,7 @@ author: AI-VT Club
 pubDatetime: 2026-04-10T08:00:00Z
 title: "„AI – моят нов колега“: дискусия в TaM, Велико Търново"
 slug: ai-moyat-nov-kolega-diskusiya-veliko-tarnovo
-featured: true
+featured: false
 draft: false
 tags:
   - събития

@@ -3,7 +3,7 @@ author: AI-VT Club
 pubDatetime: 2026-10-25T08:00:00Z
 title: "Count me in - recap: 14 фирми от Велико Търново по 60 секунди (и какво показа преброяването)"
 slug: count-me-in-veliko-tarnovo-recap
-featured: false
+featured: true
 draft: false
 tags:
   - събития
